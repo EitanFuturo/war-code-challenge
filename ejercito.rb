@@ -65,16 +65,25 @@ class Civilizacion
 end
 
 class Ejercito
-  attr_reader :civilizacion
+  attr_reader :civilizacion, :piqueros, :arqueros, :caballeros
 
   def initialize(civilizacion:)
     @civilizacion = civilizacion
-    @piqueros = civilizacion[:piqueros]
+    @piqueros = civilizacion.piqueros
+    @arqueros = civilizacion.arqueros
+    @caballeros = civilizacion.caballeros
+    @oro = 1000
   end
+
 
 end
 
-civilizacion = FabricaCivilizacion.build(civilizacion: CHINA)
-civilizacion.piqueros.first.class
-civilizacion.arqueros.first.class
-civilizacion.caballeros.first.class
+civilizacion_china = FabricaCivilizacion.build(civilizacion: CHINA)
+
+civilizacion_inglesa = FabricaCivilizacion.build(civilizacion: INGLESA)
+
+civilizacion_bizantina = FabricaCivilizacion.build(civilizacion: BIZANTINA)
+
+ejercito_chino = Ejercito.new(civilizacion: civilizacion_china)
+ejercito_ingles = Ejercito.new(civilizacion: civilizacion_inglesa)
+ejercito_bizantino = Ejercito.new(civilizacion: civilizacion_bizantina)
