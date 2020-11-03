@@ -1,3 +1,4 @@
+require 'byebug'
 CHINA = {
     nombre: 'Chino',
     piqueros: 2,
@@ -73,21 +74,20 @@ class Ejercito
     unidad.entrenar
     self.oro -= unidad.costo_entrenamiento
   end
+
+  def transformar(unidad_inicial)
+    return 'Los caballeros no pueden ser entrenados.' if unidad_inicial.class == Caballero
+
+    nueva_unidad = unidad_inicial.transformar
+    unidades = [piqueros, arqueros, caballeros]
+
+    unidades.each do | unidad |
+      unidad.pop if unidad.first.class == unidad_inicial.class
+      unidad << nueva_unidad if unidad.first.class == nueva_unidad.class
+    end
+    self.oro -= unidad_inicial.costo_conversion
+  end
 end
-
-#class Ejercito
-#  attr_reader :civilizacion, :piqueros, :arqueros, :caballeros
-#
-#  def initialize(civilizacion:)
-#    @civilizacion = civilizacion
-#    @piqueros = civilizacion.piqueros
-#    @arqueros = civilizacion.arqueros
-#    @caballeros = civilizacion.caballeros
-#    @oro = 1000
-#  end
-#
-
-#end
 
 ejercito_chino = FabricaEjercito.build(civilizacion: CHINA)
 
@@ -105,3 +105,15 @@ ejercito_chino.piqueros.first.puntos_fuerza
 ejercito_chino.entrenar(ejercito_chino.piqueros.first)
 ejercito_chino.oro
 ejercito_chino.piqueros.first.puntos_fuerza
+
+ejercito_ingles.piqueros.size
+ejercito_ingles.arqueros.size
+ejercito_ingles.transformar(ejercito_ingles.piqueros.first)
+ejercito_ingles.piqueros.size
+ejercito_ingles.arqueros.size
+ejercito_ingles.caballeros.size
+ejercito_ingles.transformar(ejercito_ingles.arqueros.first)
+ejercito_ingles.arqueros.size
+ejercito_ingles.caballeros.size
+ejercito_ingles.transformar(ejercito_ingles.caballeros.first)
+ejercito_ingles.caballeros.size

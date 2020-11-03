@@ -6,7 +6,7 @@ class Caballero < Unidad
   end
 
   def transformar
-    nil
+    raise 'Los caballeros no pueden ser entrenados.'
   end
 
   def costo_entrenamiento_default

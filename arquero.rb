@@ -8,7 +8,7 @@ class Arquero < Unidad
   end
 
   def transformar
-    #Caballero.new(puntos_fuerza: puntos_fuerza)
+    Caballero.new(puntos_iniciales: puntos_fuerza)
   end
 
   def costo_entrenamiento_default
