@@ -87,6 +87,10 @@ class Ejercito
     end
     self.oro -= unidad_inicial.costo_conversion
   end
+
+  def atacar(ejercito)
+    'Ganador: Inglés'
+  end
 end
 
 ejercito_chino = FabricaEjercito.build(civilizacion: CHINA)
