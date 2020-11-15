@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 load './ejercito.rb'
-#load '../piquero.rb'
 
 class EjercitoTest < Minitest::Test
   def setup
@@ -13,6 +12,15 @@ class EjercitoTest < Minitest::Test
   end
 
   def test_combate_de_ejercitos
-    assert_equal 'Ganador: Inglés', @ejercito_chino.atacar(@ejercito_ingles)
+    @ejercito_chino.atacar(@ejercito_ingles)
+    assert_equal 1100, @ejercito_ingles.oro
+  end
+
+  def test_empate_entre_ejercitos
+    @ejercito_chino.puntos_fuerza = 100
+    @ejercito_ingles.puntos_fuerza = 100
+    @ejercito_chino.atacar(@ejercito_ingles)
+    assert_equal 28, @ejercito_chino.unidades.count
+    assert_equal 29, @ejercito_ingles.unidades.count
   end
 end

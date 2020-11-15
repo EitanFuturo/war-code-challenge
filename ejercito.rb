@@ -60,13 +60,14 @@ class FabricaEjercito
 end
 
 class Ejercito
-  attr_accessor :civilizacion, :piqueros, :arqueros, :caballeros, :oro
+  attr_accessor :civilizacion, :unidades, :piqueros, :arqueros, :caballeros, :oro, :puntos_fuerza
 
   def initialize(civilizacion:, piqueros:, arqueros:, caballeros:)
     @civilizacion = civilizacion
     @piqueros = piqueros
     @arqueros = arqueros
     @caballeros = caballeros
+    @unidades = piqueros + arqueros + caballeros
     @oro = 1000
   end
 
@@ -88,36 +89,27 @@ class Ejercito
     self.oro -= unidad_inicial.costo_conversion
   end
 
-  def atacar(ejercito)
-    'Ganador: Inglés'
+  def atacar(otro_ejercito)
+    return empatar(otro_ejercito) if otro_ejercito.puntos_fuerza == puntos_fuerza
+
+    otro_ejercito.puntos_fuerza > puntos_fuerza ? perder(otro_ejercito) : ganar
+  end
+
+  def puntos_fuerza
+    @puntos_fuerza ||= unidades.reduce(0) { | sum, unidad | sum + unidad.puntos_fuerza }
+  end
+
+  def ganar
+    self.oro += 100
+  end
+
+  def perder(otro_ejercito)
+    otro_ejercito.ganar
+  end
+
+  def empatar(otro_ejercito=nil)
+    unidades.pop
+    otro_ejercito.unidades.pop if otro_ejercito
   end
 end
 
-ejercito_chino = FabricaEjercito.build(civilizacion: CHINA)
-
-ejercito_ingles = FabricaEjercito.build(civilizacion: INGLESA)
-
-ejercito_bizantino = FabricaEjercito.build(civilizacion: BIZANTINA)
-
-
-ejercito_chino.civilizacion
-ejercito_ingles.civilizacion
-ejercito_bizantino.civilizacion
-
-ejercito_chino.oro
-ejercito_chino.piqueros.first.puntos_fuerza
-ejercito_chino.entrenar(ejercito_chino.piqueros.first)
-ejercito_chino.oro
-ejercito_chino.piqueros.first.puntos_fuerza
-
-ejercito_ingles.piqueros.size
-ejercito_ingles.arqueros.size
-ejercito_ingles.transformar(ejercito_ingles.piqueros.first)
-ejercito_ingles.piqueros.size
-ejercito_ingles.arqueros.size
-ejercito_ingles.caballeros.size
-ejercito_ingles.transformar(ejercito_ingles.arqueros.first)
-ejercito_ingles.arqueros.size
-ejercito_ingles.caballeros.size
-ejercito_ingles.transformar(ejercito_ingles.caballeros.first)
-ejercito_ingles.caballeros.size
